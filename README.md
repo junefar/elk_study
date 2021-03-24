@@ -143,6 +143,10 @@ docker-compose up -d
 
 ![image-20210324173047818](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210324173047818.png)
 
+- 在侧边栏`Analytics`>`Discover`中查看,以及一些`Dashboard`可视化面板
+
+  ![image-20210324174216087](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210324174216087.png)
+
 ####  如何用Logstash收集数据
 
 > 见`log.py`

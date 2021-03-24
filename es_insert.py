@@ -22,6 +22,6 @@ data = lambda: {
     "desc": fk.text()
 }
 
-for i in range(100, 200):
+for i in range(1, 200):
     res = requests.put(url.format(index=index, type=type, id=i), data=json.dumps(data()), headers=headers)
     print(res.status_code, res.text)
