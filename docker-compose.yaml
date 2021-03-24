@@ -1,0 +1,61 @@
+version: '2'
+services:
+    elasticsearch:
+        image: elasticsearch:7.11.2
+        container_name: elasticsearch
+        ports:
+          - "9200:9200"
+          - "9300:9300"
+        volume:
+          - es-data:/usr/share/elasticsearch/data
+        environment:
+          - discovery.type=single-node
+        hostname: elasticsearch
+        networks:
+            elk-net:
+                ipv4_address: 172.19.0.2
+        restart: always
+
+
+    kibana:
+        image: kibana:7.11.2
+        container_name: kibana
+        ports: 
+          - "5601:5601"
+        hostname: kibana
+        networks:
+            elk-net:
+                ipv4_address: 172.19.0.4
+        depends_on:
+            - elasticsearch
+        restart: always
+
+    logstash:
+        image: logstash:7.11.2
+        container_name: logstash
+        ports: 
+          - "5044:5044"
+          - "5959:5959"
+        hostname: logstash
+        networks:
+            elk-net:
+                ipv4_address: 172.19.0.5
+        volumes: 
+          - ./logstash/config:/usr/share/logstash/config
+          - ./logstash/pipeline:/usr/share/logstash/pipeline
+        depends_on:
+            - elasticsearch
+        restart: always
+
+
+networks:
+    elk-net:
+        ipam:
+            config:
+            - subnet: 172.19.0.0/24
+              gateway: 172.19.0.1
+
+volumes:
+  es-data:
+    external:
+        name: es-data
